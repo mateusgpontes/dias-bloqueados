@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import DayPicker from "react-day-picker";
 import dates from "./bloqueados";
 import "react-day-picker/lib/style.css";
+import parse from "date-fns/parse";
 
 function Calendario() {
   const [selectedDay, setSelectedDay] = useState(undefined);
-
   function handleDayClick(day, { selected }) {
     if (selected) {
       setSelectedDay(undefined);
@@ -16,14 +16,10 @@ function Calendario() {
 
   return (
     <div>
-      {console.log(dates)}
       <DayPicker
         disabledDays={dates.map(date => {
-          let day = new Date(date.day);
-          let fuso = 3 * 10000000;
-          let teste = day.getHours() + fuso;
-          console.log((teste = new Date(day.getHours() + fuso)));
-          return teste;
+          let dateDay = parse(date.day);
+          return new Date(dateDay);
         })}
         onDayClick={handleDayClick}
         selectedDays={selectedDay}
